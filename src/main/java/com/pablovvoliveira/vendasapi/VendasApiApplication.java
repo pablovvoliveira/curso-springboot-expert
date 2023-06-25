@@ -40,14 +40,15 @@ public class VendasApiApplication {
 			System.out.println();
 			System.out.println();
 			System.out.println("Deletando clientes");
-			/*clientes.obterTodos().forEach(c -> {
+			clientes.obterTodos().forEach(c -> {
 				clientes.deletar(c);
-			});*/
+			});
 			todosClientes = clientes.obterTodos();
 			if(todosClientes.isEmpty()) {
 				System.out.println("Nenhum cliente encontrado");
 			}
-			todosClientes.forEach(System.out::println);
+			todosClientes.forEach(System.out::println); 
+			
 			
 			
 		};

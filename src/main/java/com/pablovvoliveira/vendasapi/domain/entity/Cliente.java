@@ -1,8 +1,20 @@
 package com.pablovvoliveira.vendasapi.domain.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "cliente")
 public class Cliente {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	@Column(length = 100)
 	private String nome;
 	
 	public Cliente() {
@@ -13,7 +25,6 @@ public class Cliente {
 	}
 		
 	public Cliente(Integer id, String nome) {
-		super();
 		this.id = id;
 		this.nome = nome;
 	}
