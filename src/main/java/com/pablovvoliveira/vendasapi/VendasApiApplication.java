@@ -35,7 +35,7 @@ public class VendasApiApplication {
 			
 			System.out.println();
 			System.out.println("Buscando clientes");
-			clientes.findByNomeLike("nho").forEach(System.out::print);
+			clientes.findByNomeLike("Pablo").forEach(System.out::print);
 			
 			System.out.println();
 			System.out.println();
