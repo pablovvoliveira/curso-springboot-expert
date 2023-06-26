@@ -6,6 +6,7 @@ import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,10 +26,10 @@ public class Pedido {
 	private Cliente cliente;
 	private LocalDate dataPedido;
 	
-	@Column(length = 20, precision = 2)
+	@Column(precision = 20, scale = 2)
 	private BigDecimal total;
 	
-	@OneToMany(mappedBy = "pedido")
+	@OneToMany(mappedBy = "pedido", fetch = FetchType.LAZY)
 	private Set<ItemPedido> itens;
 	
 	public Integer getId() {
@@ -60,6 +61,13 @@ public class Pedido {
 	}
 	public void setItens(Set<ItemPedido> itens) {
 		this.itens = itens;
-	}	
+	}
+	@Override
+	public String toString() {
+		return "Pedido [id=" + id + ", dataPedido=" + dataPedido + ", total=" + total + "]";
+	}
+	
+	
+	
 	
 }
