@@ -17,18 +17,18 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.pablovvoliveira.vendasapi.domain.entity.Cliente;
-import com.pablovvoliveira.vendasapi.domain.repositories.Clienterepository;
+import com.pablovvoliveira.vendasapi.domain.entity.Produto;
+import com.pablovvoliveira.vendasapi.domain.repositories.ProdutoRepository;
 
 @RestController
-@RequestMapping("/api/clientes")
-public class ClienteController {
+@RequestMapping("/api/produtos")
+public class ProdutoController {
 	
 	@Autowired
-	private Clienterepository repository;
+	private ProdutoRepository repository;
 			
 	@GetMapping("{id}")
-	public Cliente getClienteById(@PathVariable Integer id) {
+	public Produto getClienteById(@PathVariable Integer id) {
 		return repository
 				.findById(id)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
@@ -36,8 +36,8 @@ public class ClienteController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Cliente save(@RequestBody Cliente cliente) {
-		return repository.save(cliente);
+	public Produto save(@RequestBody Produto produto) {
+		return repository.save(produto);
 	}
 	
 	@DeleteMapping("/{id}")
@@ -51,29 +51,29 @@ public class ClienteController {
 	
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void update(@PathVariable Integer id, @RequestBody Cliente cliente) {
+	public void update(@PathVariable Integer id, @RequestBody Produto produto) {
 	    repository.findById(id)
-	        .map(clienteExistente -> {
-	            cliente.setId(clienteExistente.getId());
-	            return repository.save(cliente);
+	        .map(produtoExistente -> {
+	            produto.setId(produtoExistente.getId());
+	            return repository.save(produto);
 	        })
 	        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Registro não encontrado"));
 	}
 
 
 	@GetMapping
-	public List<Cliente> findAll() {
+	public List<Produto> findAll() {
 		return repository.findAll();
 		
 	}
 	
 	@GetMapping("/filter")
-	public List<Cliente> find(Cliente filtro) {
+	public List<Produto> find(Produto filtro) {
 		ExampleMatcher matcher = ExampleMatcher
 				.matching()
 				.withIgnoreCase()
 				.withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-		Example<Cliente> ex = Example.of(filtro, matcher);
+		Example<Produto> ex = Example.of(filtro, matcher);
 		return repository.findAll(ex);
 		
 	}

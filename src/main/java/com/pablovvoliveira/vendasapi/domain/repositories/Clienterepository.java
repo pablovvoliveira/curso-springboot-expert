@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.pablovvoliveira.vendasapi.domain.entity.Cliente;
 
-public interface Clientes extends JpaRepository<Cliente, Integer>{
+public interface Clienterepository extends JpaRepository<Cliente, Integer>{
 
 	List<Cliente> findByNomeLike(String nome);
 	
