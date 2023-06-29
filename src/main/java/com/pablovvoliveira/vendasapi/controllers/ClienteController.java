@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.pablovvoliveira.vendasapi.domain.entity.Cliente;
-import com.pablovvoliveira.vendasapi.domain.repositories.Clienterepository;
+import com.pablovvoliveira.vendasapi.entity.Cliente;
+import com.pablovvoliveira.vendasapi.repositories.Clienterepository;
 
 @RestController
 @RequestMapping("/api/clientes")
