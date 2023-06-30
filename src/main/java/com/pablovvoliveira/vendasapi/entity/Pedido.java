@@ -3,7 +3,7 @@ package com.pablovvoliveira.vendasapi.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,7 +38,7 @@ public class Pedido implements Serializable{
 	private BigDecimal total;
 	
 	@OneToMany(mappedBy = "pedido", fetch = FetchType.LAZY)
-	private Set<ItemPedido> itens;
+	private List<ItemPedido> itens;
 	
 	
 }
