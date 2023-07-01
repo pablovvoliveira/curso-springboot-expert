@@ -2,6 +2,7 @@ package com.pablovvoliveira.vendasapi.services.impl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -49,6 +50,11 @@ public class PedidoServiceimpl implements PedidoService{
 		itemPedidoRepository.saveAll(itemPedido);
 		pedido.setItens(itemPedido);
 		return pedido;
+	}
+	
+	@Override
+	public Optional<Pedido> obterPedidoCompleto(Integer id) {
+		return pedidoRepository.findByIdFetchItens(id);
 	}
 	
 	private List<ItemPedido> converterItens(Pedido pedido, List<ItemPedidoDTO> items) {
