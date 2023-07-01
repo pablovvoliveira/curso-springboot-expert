@@ -13,6 +13,8 @@ import com.pablovvoliveira.vendasapi.entity.Cliente;
 import com.pablovvoliveira.vendasapi.entity.ItemPedido;
 import com.pablovvoliveira.vendasapi.entity.Pedido;
 import com.pablovvoliveira.vendasapi.entity.Produto;
+import com.pablovvoliveira.vendasapi.enums.StatusPedido;
+import com.pablovvoliveira.vendasapi.exception.PedidoNotFoundException;
 import com.pablovvoliveira.vendasapi.exception.RegraNegocioException;
 import com.pablovvoliveira.vendasapi.repositories.Clienterepository;
 import com.pablovvoliveira.vendasapi.repositories.ItemPedidoRepository;
@@ -44,6 +46,7 @@ public class PedidoServiceimpl implements PedidoService{
 		pedido.setTotal(dto.getTotal());
 		pedido.setDataPedido(LocalDate.now());
 		pedido.setCliente(cliente);
+		pedido.setStatus(StatusPedido.REALIZADO);
 		
 		List<ItemPedido> itemPedido = converterItens(pedido, dto.getItens());
 		pedidoRepository.save(pedido);
@@ -55,6 +58,17 @@ public class PedidoServiceimpl implements PedidoService{
 	@Override
 	public Optional<Pedido> obterPedidoCompleto(Integer id) {
 		return pedidoRepository.findByIdFetchItens(id);
+	}
+
+	@Override
+	@Transactional
+	public void updateStatus(Integer id, StatusPedido statusPedido) {
+		pedidoRepository
+		.findById(id)
+		.map(pedido -> {
+			pedido.setStatus(statusPedido);
+			return pedidoRepository.save(pedido);
+		}).orElseThrow(() -> new PedidoNotFoundException());
 	}
 	
 	private List<ItemPedido> converterItens(Pedido pedido, List<ItemPedidoDTO> items) {
@@ -78,5 +92,6 @@ public class PedidoServiceimpl implements PedidoService{
 				}).collect(Collectors.toList());
 		
 	}
+
 	
 }

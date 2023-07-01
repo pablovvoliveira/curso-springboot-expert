@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,8 +23,10 @@ import org.springframework.web.server.ResponseStatusException;
 import com.pablovvoliveira.vendasapi.DTO.InfoItemPedidoDTO;
 import com.pablovvoliveira.vendasapi.DTO.InfoPedidoDTO;
 import com.pablovvoliveira.vendasapi.DTO.PedidoDTO;
+import com.pablovvoliveira.vendasapi.DTO.UpdateStatusPedidoDTO;
 import com.pablovvoliveira.vendasapi.entity.ItemPedido;
 import com.pablovvoliveira.vendasapi.entity.Pedido;
+import com.pablovvoliveira.vendasapi.enums.StatusPedido;
 import com.pablovvoliveira.vendasapi.services.PedidoService;
 
 @RestController
@@ -49,6 +53,13 @@ public class PedidoController {
 				
 	}
 	
+	@PatchMapping("{id}")
+	@ResponseStatus(NO_CONTENT)
+	public void updateStatus(@PathVariable Integer id, @RequestBody UpdateStatusPedidoDTO dto) {
+		String newStatus = dto.getNewStatus();
+		service.updateStatus(id, StatusPedido.valueOf(newStatus));
+	}
+	
 	private InfoPedidoDTO converter(Pedido pedido) {
 		return InfoPedidoDTO
 			.builder()
@@ -57,6 +68,7 @@ public class PedidoController {
 			.cpf(pedido.getCliente().getCpf())
 			.nomeCliente(pedido.getCliente().getNome())
 			.total(pedido.getTotal())
+			.status(pedido.getStatus().name())
 			.itens(converter(pedido.getItens()))
 			.build();
 	}

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.pablovvoliveira.vendasapi.exception.PedidoNotFoundException;
 import com.pablovvoliveira.vendasapi.exception.RegraNegocioException;
 
 @RestControllerAdvice
@@ -16,4 +17,10 @@ public class ApplicationControllerAdvice {
 		String msgErro = ex.getMessage();
 		return new ApiErrors(msgErro);
 	}	
+	
+	@ExceptionHandler(PedidoNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public ApiErrors handlePedidoNotFoundException(PedidoNotFoundException ex) {
+		return new ApiErrors(ex.getMessage());
+	}
 }
