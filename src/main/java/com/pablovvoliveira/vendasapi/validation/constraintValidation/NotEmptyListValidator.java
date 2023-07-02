@@ -7,6 +7,7 @@ import com.pablovvoliveira.vendasapi.validation.NotEmptyList;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
+@SuppressWarnings("rawtypes")
 public class NotEmptyListValidator
 	implements ConstraintValidator<NotEmptyList, List> {
 
